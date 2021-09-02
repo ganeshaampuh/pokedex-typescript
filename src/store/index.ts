@@ -5,7 +5,8 @@ import PokemonModel from "../models/PokemonModel";
 
 const PokemonModules = {
   state: () => ({
-    list: Array<PokemonModel>()
+    list: Array<PokemonModel>(),
+    detail: {}
   }),
   mutations: {
     addPokemonToList(
@@ -13,6 +14,9 @@ const PokemonModules = {
       pokemonModel: PokemonModel
     ) {
       state.list.push(pokemonModel);
+    },
+    setPokemonDetail(state, payload) {
+      state.detail = payload;
     },
     clearAllPokemonList(state: { list: PokemonModel[] }) {
       state.list = [];
@@ -32,6 +36,16 @@ const PokemonModules = {
               commit("addPokemonToList", element);
             }
           }
+        });
+    },
+    fetchPokemonDetail({ commit }, payload: number): void {
+      axios
+        .request({
+          method: "get",
+          url: apiUrl + "pokemon/" + payload
+        })
+        .then(response => {
+          commit("setPokemonDetail", response.data);
         });
     }
   },

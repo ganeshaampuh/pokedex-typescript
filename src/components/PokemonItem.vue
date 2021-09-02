@@ -1,7 +1,7 @@
 <template>
   <div
-    class="p-3 mb-3 overflow-hidden"
-    style="background-color: #48d0b0; border-radius: 20px"
+    class="p-3 mb-3 overflow-hidden shadow-sm clic"
+    style="background-color: #48d0b0; border-radius: 20px; cursor: pointer;"
   >
     <div class="row">
       <div class="col-sm-6">
