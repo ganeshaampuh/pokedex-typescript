@@ -23,9 +23,9 @@ const PokemonModules = {
           url: apiUrl + 'pokemon'
         }
       ).then(response => {
-        if (response.data.length !== 0) {
-          for (let i = 0; i < response.data.length; i++) {
-            const element = response.data[i];
+        if (response.data.results.length !== 0) {
+          for (let i = 0; i < response.data.results.length; i++) {
+            const element = response.data.results[i];
             commit('addPokemonToList', element)
           }
         }
