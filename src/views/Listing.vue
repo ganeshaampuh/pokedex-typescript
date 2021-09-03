@@ -1,8 +1,9 @@
 <template>
-  <div class="container">
+  <div>
     <h4 class="h4 mb-4">Pokedex</h4>
+
     <div class="row">
-      <div class="col-sm-4" v-for="(item, index) in list" :key="item.name">
+      <div class="col-sm-12" v-for="(item, index) in list" :key="item.name">
         <PokemonItem
           :name="item.name"
           :number="pad(index + 1, 3)"

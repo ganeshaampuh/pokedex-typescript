@@ -1,11 +1,25 @@
 <template>
-  <div class="container">
+  <div>
     <div class="outer-layer shadow-sm">
       <div class="background px-4 py-3">
-        <h4 class="text-capitalize text-white font-weight-bold" v-if="detail">
-          {{ detail.name }}
-        </h4>
-        <h5 class="text-white">#{{ pokemonSlug }}</h5>
+        <div class="mb-3">
+          <router-link class="text-white" to="/">
+            <i class="fas fa-arrow-left"></i>
+          </router-link>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h4
+              class="text-capitalize text-white font-weight-bold"
+              v-if="detail"
+            >
+              {{ detail.name }}
+            </h4>
+          </div>
+          <div class="col">
+            <h5 class="text-white text-right">#{{ pokemonSlug }}</h5>
+          </div>
+        </div>
         <ul class="label">
           <li
             v-for="item in detail.types"
@@ -18,7 +32,15 @@
         <img class="img-fluid mx-auto d-block" :src="image" width="300" />
       </div>
       <div class="description">
-        <!-- <pre>{{ detail }}</pre> -->
+        <ul class="menus">
+          <li
+            v-for="item in menu"
+            :key="item"
+            :class="{ active: item === 'about' }"
+          >
+            {{ makeTitle(item) }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -44,6 +66,19 @@ export default defineComponent({
         )}.png`
     );
 
+    const menu = ["about", "base_stats", "evolution", "moves"];
+
+    const makeTitle = (slug) => {
+      var words = slug.split("_");
+
+      for (var i = 0; i < words.length; i++) {
+        var word = words[i];
+        words[i] = word.charAt(0).toUpperCase() + word.slice(1);
+      }
+
+      return words.join(" ");
+    };
+
     onMounted(() => {
       store.dispatch("fetchPokemonDetail", route.params.pokemonId);
     });
@@ -51,6 +86,8 @@ export default defineComponent({
     return {
       pokemonSlug: computed(() => pad(route.params.pokemonId, 3)),
       image,
+      menu,
+      makeTitle,
       detail: computed(() => store.state.PokemonModules.detail),
     };
   },
@@ -89,7 +126,25 @@ export default defineComponent({
   }
 }
 
+.menus {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  li {
+    margin: 0 15px;
+    padding-top: 30px;
+    color: #d6d8d9;
+    font-weight: bold;
+
+    &.active {
+      color: #93979c;
+    }
+  }
+}
+
 body {
   background-color: #f1f3f9;
+  font-family: "Roboto", sans-serif;
 }
 </style>
